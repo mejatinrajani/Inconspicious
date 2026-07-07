@@ -234,8 +234,8 @@ class ChatWindow(FramelessWindow):
         self.setStyleSheet("""
         QFrame{ background:#F8F8F8; border:1px solid rgba(0,0,0,35); border-radius:18px; }
         QLabel{ background:transparent; color:#222; border:none; }
-        QTextEdit{ background:white; color:#222; border:none; border-radius:15px; padding:15px; font-size:14px; }
-        QLineEdit{ background:white; color:#222; border:1px solid #DDD; border-radius:14px; padding:12px; font-size:14px; }
+        QTextEdit{ background:white; color:#222; border:none; border-radius:15px; padding:15px; font-size:16px; }
+        QLineEdit{ background:white; color:#222; border:1px solid #DDD; border-radius:14px; padding:12px; font-size:16px; }
         QPushButton{ background:#2D7DFF; color:white; border:none; border-radius:12px; font-size:14px; }
         QPushButton:hover{ background:#4A90FF; }
         QTextEdit QScrollBar:vertical{ width:8px; background:transparent; }
@@ -246,8 +246,8 @@ class ChatWindow(FramelessWindow):
         self.setStyleSheet("""
         QFrame{ background:#202124; border:1px solid rgba(255,255,255,40); border-radius:18px; }
         QLabel{ background:transparent; color:white; border:none; }
-        QTextEdit{ background:#2A2B2E; color:white; border:none; border-radius:15px; padding:15px; font-size:14px; }
-        QLineEdit{ background:#2A2B2E; color:white; border:1px solid #444; border-radius:14px; padding:12px; font-size:14px; }
+        QTextEdit{ background:#2A2B2E; color:white; border:none; border-radius:15px; padding:15px; font-size:16px; }
+        QLineEdit{ background:#2A2B2E; color:white; border:1px solid #444; border-radius:14px; padding:12px; font-size:16px; }
         QPushButton{ background:#4F8EF7; color:white; border:none; border-radius:12px; font-size:14px; }
         QPushButton:hover{ background:#6BA3FF; }
         QTextEdit QScrollBar:vertical{ width:8px; background:transparent; }
