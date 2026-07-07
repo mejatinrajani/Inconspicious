@@ -60,7 +60,7 @@ The application will automatically load the API key during startup.
 Clone the repository.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/mejatinrajani/Inconspicious.git
 ```
 
 Move into the project directory.
