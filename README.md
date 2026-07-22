@@ -75,11 +75,13 @@ Install the required dependencies.
 pip install -r requirements.txt
 ```
 
-Run the application.
+Run the packaged executable directly as administrator.
 
 ```bash
-python main.py
+dist\main.exe
 ```
+
+On Windows, right-click the executable and choose **Run as administrator** if needed.
 
 ---
 
