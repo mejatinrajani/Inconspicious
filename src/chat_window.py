@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt, QPoint, QThread, pyqtSignal
 from qframelesswindow import FramelessWindow
-from PyQt5.QtGui import QColor, QPainter, QBrush, QFont, QCursor, QTextCursor
+from PyQt5.QtGui import QColor, QPainter, QBrush, QFont, QCursor, QTextCursor, QIcon
 from groq import Groq
 from dotenv import load_dotenv, find_dotenv
 
@@ -57,11 +57,15 @@ class ChatWindow(FramelessWindow):
     def __init__(self):
         super().__init__()
 
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('inconspicuous_ai_shoe_app')
+        self.setWindowIcon(QIcon('icon.ico'))
+
         self.setWindowTitle("Inconspicious AI")
         self.resize(850, 560)
         self.resize_margin = 8
 
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
+        self.setWindowFlag(Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setMinimumSize(500, 350)
 
@@ -121,7 +125,7 @@ class ChatWindow(FramelessWindow):
         layout.addLayout(bottom)
 
         #####################################################
-        # Theme Init
+        # Theme Init    
         #####################################################
         palette = QApplication.palette()
         if palette.color(palette.Window).lightness() > 128:
