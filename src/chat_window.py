@@ -7,9 +7,11 @@ from PyQt5.QtWidgets import (
     QLabel, QFrame
 )
 from PyQt5.QtCore import Qt, QPoint, QThread, pyqtSignal
+import markdown
 from qframelesswindow import FramelessWindow
 from PyQt5.QtGui import QColor, QPainter, QBrush, QFont, QCursor, QTextCursor, QIcon
 from groq import Groq
+import re
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -169,8 +171,53 @@ class ChatWindow(FramelessWindow):
         cursor.removeSelectedText()
         cursor.deletePreviousChar() # Remove the extra newline
 
-        formatted_reply = reply.replace('\n', '<br>')
-        self.chat_history.append(f"<b>Inconspicious AI</b><br>{formatted_reply}<br><br>")
+        # ---------------------------------------------------------
+        # NEW MARKDOWN AND SYNTAX HIGHLIGHTING LOGIC
+        # ---------------------------------------------------------
+        
+        md_extensions = ['fenced_code', 'codehilite', 'tables']
+        md_configs = {
+            'codehilite': {
+                'noclasses': True,
+                'pygments_style': 'monokai'
+            }
+        }
+
+        # Convert the AI's raw markdown response into HTML
+        html_reply = markdown.markdown(
+            reply, 
+            extensions=md_extensions, 
+            extension_configs=md_configs
+        )
+
+        # ---------------------------------------------------------
+        # 1. FIX BLOCK CODE: Force solid backgrounds like ChatGPT
+        # ---------------------------------------------------------
+        html_reply = re.sub(
+            r'<div class="codehilite".*?>\s*(<pre.*?>.*?</pre>)\s*</div>',
+            r'<table width="100%" bgcolor="#272822" style="margin: 10px 0px; border-radius: 8px;"><tr><td style="padding: 15px;">\1</td></tr></table>',
+            html_reply,
+            flags=re.IGNORECASE | re.DOTALL
+        )
+
+        # ---------------------------------------------------------
+        # 2. FIX INLINE CODE: Make text commands visible again!
+        # ---------------------------------------------------------
+        # This gives inline commands a nice dark grey background and white text 
+        # so they pop out from the regular paragraphs.
+        inline_code_style = '<code style="background-color: #3b3b3b; color: #f8f8f2; font-family: Consolas, monospace;">'
+        html_reply = html_reply.replace('<code>', inline_code_style)
+
+        # Removed 'code' from CSS entirely since we handle it directly now
+        custom_css = """
+        <style>
+            p { margin-bottom: 10px; }
+            th, td { border: 1px solid #555; padding: 5px; }
+        </style>
+        """
+
+        # Append the fully styled HTML to the chat history
+        self.chat_history.append(f"{custom_css}<b>Inconspicuous AI</b><br>{html_reply}<br><br>")
         self.restore_inputs()
 
     def on_error(self, error_msg):
