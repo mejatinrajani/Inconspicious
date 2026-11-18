@@ -164,16 +164,11 @@ class ChatWindow(FramelessWindow):
         self.worker.start()
 
     def on_response_ready(self, reply):
-        # Remove the "thinking..." line by undoing the last block
         cursor = self.chat_history.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.select(QTextCursor.BlockUnderCursor)
         cursor.removeSelectedText()
-        cursor.deletePreviousChar() # Remove the extra newline
-
-        # ---------------------------------------------------------
-        # NEW MARKDOWN AND SYNTAX HIGHLIGHTING LOGIC
-        # ---------------------------------------------------------
+        cursor.deletePreviousChar()
         
         md_extensions = ['fenced_code', 'codehilite', 'tables']
         md_configs = {
@@ -200,11 +195,6 @@ class ChatWindow(FramelessWindow):
             flags=re.IGNORECASE | re.DOTALL
         )
 
-        # ---------------------------------------------------------
-        # 2. FIX INLINE CODE: Make text commands visible again!
-        # ---------------------------------------------------------
-        # This gives inline commands a nice dark grey background and white text 
-        # so they pop out from the regular paragraphs.
         inline_code_style = '<code style="background-color: #3b3b3b; color: #f8f8f2; font-family: Consolas, monospace;">'
         html_reply = html_reply.replace('<code>', inline_code_style)
 
