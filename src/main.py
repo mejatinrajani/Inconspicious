@@ -40,6 +40,7 @@ if __name__ == "__main__":
     chat_window.setWindowIcon(app_icon)
     
     make_stealth(chat_window)
+    chat_window.show()
 
-    tray = TrayIcon(app, chat_window)  
+    tray = TrayIcon(app, chat_window, app_icon) 
     sys.exit(app.exec_())

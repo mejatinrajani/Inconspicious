@@ -2,10 +2,10 @@ from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
 from PyQt5.QtGui import QIcon
 
 class TrayIcon(QSystemTrayIcon):
-    def __init__(self, app, chat_window):
-        super().__init__(QIcon("../assets/icon.ico"), app)
+    def __init__(self, app, chat_window, icon):
+        super().__init__(icon, app)
 
-        self.app = app
+        self.app = app  
         self.chat_window = chat_window
 
         # Context menu
